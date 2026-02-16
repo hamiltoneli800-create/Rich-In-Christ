@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rich In Christ</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;900&display=swap" rel="stylesheet">
+<style>
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #000;
+  color: white;
+  overflow-x: hidden;
+}
+
+nav {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+nav h1 {
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: gold;
+}
+
+nav button {
+  background: gold;
+  border: none;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+nav button:hover {
+  background: white;
+}
+
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.hero h2 {
+  font-size: 60px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.hero p {
+  margin-top: 20px;
+  color: #ccc;
+}
+
+.section {
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.product-card {
+  background: #111;
+  padding: 40px;
+  margin-top: 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 40px rgba(255,215,0,0.2);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-card h3 {
+  margin-bottom: 10px;
+}
+
+.product-card button {
+  margin-top: 20px;
+  background: gold;
+  border: none;
+  padding: 12px 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+footer {
+  padding: 40px;
+  text-align: center;
+  background: #111;
+  margin-top: 80px;
+  color: #777;
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+  <h1>RICH IN CHRIST</h1>
+  <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop</button>
+</nav>
+
+<div class="hero">
+  <h2>Faith Makes You Rich</h2>
+  <p>Luxury Streetwear Built On Belief</p>
+</div>
+
+<div class="section" id="shop">
+  <h2>Signature Hoodie</h2>
+  
+  <div class="product-card">
+    <h3>RIC Classic Hoodie</h3>
+    <p>$49.00</p>
+    <button onclick="alert('Checkout system coming soon')">Add To Cart</button>
+  </div>
+</div>
+
+<footer>
+  © 2026 Rich In Christ. All Rights Reserved.
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const geometry = new THREE.TorusGeometry(1.5, 0.4, 16, 100);
+const material = new THREE.MeshStandardMaterial({color: 0xFFD700, metalness: 1, roughness: 0.2});
+const torus = new THREE.Mesh(geometry, material);
+scene.add(torus);
+
+const light1 = new THREE.PointLight(0xffffff, 1);
+light1.position.set(5,5,5);
+scene.add(light1);
+
+const light2 = new THREE.PointLight(0xffffff, 0.5);
+light2.position.set(-5,-5,-5);
+scene.add(light2);
+
+camera.position.z = 5;
+
+function animate(){
+  requestAnimationFrame(animate);
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.01;
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', ()=>{
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
+
+</body>
+</html>
