@@ -1,2 +1,66 @@
-# Rich-In-Christ
-Clothing Brand for Christians Jesus payed our debt on the cross so that we can be free from sin. Rich in Christ not money but eternal life, eternal riches. Rich In Christ!
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const light1 = new THREE.PointLight(0xffffff, 1);
+light1.position.set(5,5,5);
+scene.add(light1);
+
+const light2 = new THREE.PointLight(0xffffff, 0.5);
+light2.position.set(-5,-5,-5);
+scene.add(light2);
+
+const goldMaterial = new THREE.MeshStandardMaterial({
+  color: 0xFFD700,
+  metalness: 1,
+  roughness: 0.2
+});
+
+const vertical = new THREE.BoxGeometry(0.6, 4, 0.6);
+const horizontal = new THREE.BoxGeometry(2.5, 0.6, 0.6);
+
+const verticalMesh = new THREE.Mesh(vertical, goldMaterial);
+const horizontalMesh = new THREE.Mesh(horizontal, goldMaterial);
+
+horizontalMesh.position.y = 0.8;
+
+const cross = new THREE.Group();
+cross.add(verticalMesh);
+cross.add(horizontalMesh);
+
+scene.add(cross);
+
+const ribbonGeometry = new THREE.TorusGeometry(2, 0.15, 16, 100);
+const ribbonMaterial = new THREE.MeshStandardMaterial({
+  color: 0xffffff,
+  metalness: 0.5,
+  roughness: 0.3
+});
+
+const ribbon = new THREE.Mesh(ribbonGeometry, ribbonMaterial);
+ribbon.rotation.x = Math.PI / 2.5;
+ribbon.position.y = 0.5;
+
+scene.add(ribbon);
+
+camera.position.z = 8;
+
+function animate(){
+  requestAnimationFrame(animate);
+  cross.rotation.y += 0.01;
+  ribbon.rotation.z += 0.015;
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', ()=>{
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+});
+</script>
